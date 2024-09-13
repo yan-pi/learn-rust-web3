@@ -20,7 +20,7 @@ impl Pallet {
     }
 
     pub fn transfer(
-        &mut self, 
+        &mut self,
         caller: String,
         to: String,
         amount: u128,
@@ -28,7 +28,9 @@ impl Pallet {
         let caller_balance = self.get_balance(caller.clone());
         let to_balance = self.get_balance(to.clone());
 
-        let new_caller_balance = caller_balance.checked_sub(amount).ok_or("Insufficient balance")?;
+        let new_caller_balance = caller_balance
+            .checked_sub(amount)
+            .ok_or("Insufficient balance")?;
         let new_to_balance = to_balance.checked_add(amount).ok_or("Overflow")?;
 
         self.balances.insert(caller, new_caller_balance);
